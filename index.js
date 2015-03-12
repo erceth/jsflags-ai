@@ -4,15 +4,19 @@ var socketio = require('socket.io-client');
 var socket = socketio(url);
 socket.on('connect', function() {});
 
-var preselectedPlayer = false; console.log(process.argv[2]);
+var preselectedPlayer = false;
 if (process.argv[2]) {
 	preselectedPlayer = process.argv[2];
 }
 
-
-var connection = "";
+var connected = false;
 
 socket.on("init", function(availableConnections) {
+	if (connected) { //TODO: I don't like this code. replace.
+		return;
+	}
+	connected = true;
+
 	if (preselectedPlayer || preselectedPlayer === 0) {
 		setNamespace(url + availableConnections.availableConnections[preselectedPlayer].namespace);
 	} else {
@@ -56,22 +60,22 @@ function driver() {
 
 	var orders = {
 		tankNumbers: [1],
-		speed: .5,
-		angleVel: -0.5
+		speed: 1,
+		angleVel: -0.1
 	}
 	socket.emit("move", orders);
 
 	var orders = {
 		tankNumbers: [2],
-		speed: .1,
-		angleVel: -0.1
+		speed: 1,
+		angleVel: 0.1
 	}
 	socket.emit("move", orders);
 
 	var orders = {
 		tankNumbers: [3],
 		speed: 1,
-		angleVel: -0.1
+		angleVel: 0.0
 	}
 	socket.emit("move", orders);
 }
