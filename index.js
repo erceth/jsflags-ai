@@ -54,28 +54,28 @@ function driver() {
 	var orders = {
 		tankNumbers: [0],
 		speed: 1,
-		angleVel: 1
+		angleVel: 0.1
 	}
 	socket.emit("move", orders);
 
 	var orders = {
 		tankNumbers: [1],
-		speed: 1,
-		angleVel: 1
+		speed: .75,
+		angleVel: -0.5
 	}
 	socket.emit("move", orders);
 
 	var orders = {
 		tankNumbers: [2],
-		speed: 1,
-		angleVel: 1
+		speed: .5,
+		angleVel: 0.2
 	}
 	socket.emit("move", orders);
 
 	var orders = {
 		tankNumbers: [3],
-		speed: 1,
-		angleVel: 1
+		speed: .25,
+		angleVel: -0.1
 	}
 	socket.emit("move", orders);
 }
