@@ -11,6 +11,8 @@ if (process.argv[2]) {
 
 var connected = false;
 
+var interval = {};
+
 socket.on("init", function(availableConnections) {
 	if (connected) { //TODO: I don't like this code. replace.
 		return;
@@ -43,6 +45,10 @@ socket.on("init", function(availableConnections) {
     	socket = socketio(urlPlusNamespace); //set namespace
     	socket.on('connect', function() { //connect to namespace
 			socket.on("connected", driver);
+			socket.on("disconnect", function() {
+				clearInterval(interval);
+				console.log("interval cleared");
+			});
 		}); 
     }
 });
@@ -58,25 +64,35 @@ function driver() {
 	}
 	socket.emit("move", orders);
 
-	var orders = {
+	orders = {
 		tankNumbers: [1],
 		speed: .75,
 		angleVel: -0.5
 	}
 	socket.emit("move", orders);
 
-	var orders = {
+	orders = {
 		tankNumbers: [2],
 		speed: .5,
 		angleVel: 0.2
 	}
 	socket.emit("move", orders);
 
-	var orders = {
+	orders = {
 		tankNumbers: [3],
 		speed: .25,
 		angleVel: -0.1
 	}
 	socket.emit("move", orders);
+
+	orders = {
+		tankNumbers: [0,1,2,3]
+	}
+	interval = setInterval(function() {
+		socket.emit("fire", orders);
+	}, 3000);
+	console.log("interval set");
+	
+	
 }
 
