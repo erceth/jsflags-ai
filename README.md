@@ -8,3 +8,6 @@ JSflags-ai is a dummy AI that connects to a [JSFlags](https://github.com/erceth/
 - Download and run [JSFlags](https://github.com/erceth/jsflags).
 - run JSFlags-ai and connect it to the JSFlags server (i.e. node index.js 0).
 - open Chrome tab to port specified in JSFlags and watch your AI be amazing.
+
+## Demo
+Watch this dummy AI fight itself forever here at [http://www.jsflags.ericethington.com](http://www.jsflags.ericethington.com/)
