@@ -16,12 +16,13 @@ if (process.argv[2]) {
 
 var enemyBases = [];
 var myTanks = [];
+var allBases = [];
 socket.on("init", function(initD) {
 	if (connected) {
 		return false;
 	}
 	socket.on("disconnect", function() {
-		process.exit(1);
+		//process.exit(1);
 	});
 	connected = true;
 	initData = initD;
@@ -30,7 +31,11 @@ socket.on("init", function(initD) {
 	enemyBases = initData.players.filter(function(p) {
 		return selectedPlayer.playerColor !== p.playerColor;
 	});
-	for (var i = 0; i < initData.numOfTanks; i++) {
+	allBases = initData.players;
+	var serverTanks = initData.tanks.filter(function(t) {
+		return selectedPlayer.playerColor === t.color;
+	});
+	for (var i = 0; i < serverTanks.length; i++) {
 		myTanks.push(new Tank(i));
 	}
 
@@ -233,10 +238,16 @@ Tank.prototype = {
 		return this.hasATarget;
 	},
 	generateTarget: function() {
+		/* //wander between enemy bases
 		var randomNumber = Math.floor(Math.random() * 10 % enemyBases.length); //random num between 0 and enemyBases.length
 		//var randomNumber = 1;
 		//console.log(randomNumber, enemyBases[randomNumber].base);
 		this.target = enemyBases[randomNumber].base.position;
+		*/
+		//wander between all bases
+		var randomNumber = Math.floor(Math.random() * 10 % allBases.length); //random num between 0 and enemyBases.length
+		this.target = allBases[randomNumber].base.position;
+
 		this.hasATarget = true;
 		return this.target;
 	},
