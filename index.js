@@ -74,7 +74,7 @@ function startInterval() {
 
 	setInterval(function() {
 		fire();
-	}, 5000);
+	}, 500);
 }
 
 
