@@ -107,8 +107,10 @@ function calculateGoal() {
 		} else {
 			goal = myTanks[i].generateTarget();
 		}
-
+		//find distance to goal
 		distance = round(Math.sqrt(Math.pow(( goal.x - myTanks[i].position.x ), 2) + Math.pow(( goal.y - myTanks[i].position.y ), 2)), 4);
+
+		//find angle difference to face goal
 		relativeX = goal.x - myTanks[i].position.x;
 		relativeY = goal.y - myTanks[i].position.y;
 		angle = round(Math.atan2(-(relativeY), relativeX), 4);
@@ -117,7 +119,6 @@ function calculateGoal() {
 		degrees = -(degrees); // tank degrees ascends clockwise. atan2 ascends counter clockwise. this fixes that difference
 
 		//turn in the direction whichever is closer
-		var angleDiff = 0;
 		if (degrees > myTanks[i].angle) { // +
 			myTanks[i].goal.angleVel = 1;
 		} else { // -
@@ -147,9 +148,9 @@ function sendBackCommands() {
 		speed = myTanks[i].goal.speed * 1;
 		angleVel = myTanks[i].goal.angleVel * 1;
 		orders = {
-			tankNumbers: [myTanks[i].tankNumber],
-			speed: speed,
-			angleVel: angleVel
+			tankNumbers: [myTanks[i].tankNumber], //an array of numbers e.g. [0,1,2,3]
+			speed: speed,                         //speed of tank value of -1 to 1, numbers outside of this range will default to -1 or 1, whichever is closer.
+			angleVel: angleVel                    //turning speed of tank positive turns right, negative turns left
 		}
 		command.emit("move", orders);
 	}
