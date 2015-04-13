@@ -46,7 +46,42 @@ socket.on("init", function(initD) {
 });
 
 
-//AI logic goes after here
+/*** AI logic goes after here ***/
+
+/** send back to server **/
+function startInterval() {
+	setInterval(function() {
+		sendBackCommands();
+	}, 500);
+
+	setInterval(function() {
+		fire();
+	}, 500);
+}
+
+function sendBackCommands() {
+	//add up all calculations
+	var speed, angleVel, orders;
+	for (var i = 0; i < myTanks.length; i++) {
+		speed = myTanks[i].goal.speed * 1;
+		angleVel = myTanks[i].goal.angleVel * 1;
+		orders = {
+			tankNumbers: [myTanks[i].tankNumber], //an array of numbers e.g. [0,1,2,3]
+			speed: speed,                         //speed of tank value of -1 to 1, numbers outside of this range will default to -1 or 1, whichever is closer.
+			angleVel: angleVel                    //turning speed of tank positive turns right, negative turns left
+		}
+		command.emit("move", orders);
+	}
+}
+
+function fire() {
+	var orders = {
+		tankNumbers: [0,1,2,3]
+	}
+	command.emit("fire", orders);
+}
+
+/** recieve from server **/
 socket.on("refresh", function(gameState) {
 	var myTanksNewPosition = gameState.tanks.filter(function(t) {
 		return selectedPlayer.playerColor === t.color;
@@ -60,20 +95,6 @@ socket.on("refresh", function(gameState) {
 	
 });
 
-
-function startInterval() {
-	setInterval(function() {
-		sendBackCommands();
-	}, 500);
-
-	setInterval(function() {
-		fire();
-	}, 500);
-}
-
-
-
-
 function updateMyTanks (myTanksNewPosition) {
 	for (var i = 0; i < myTanks.length; i++) {
 		for (var j = 0; j < myTanksNewPosition.length; j++) {
@@ -85,21 +106,12 @@ function updateMyTanks (myTanksNewPosition) {
 	}
 }
 
-function fire() {
-	var orders = {
-		tankNumbers: [0,1,2,3]
-	}
-	command.emit("fire", orders);
-}
-
-
 function calculateGoal() {
 	var distance = 0;
 	var angle = 0;
 	var degrees = 0;
 	var relativeX = 0;
 	var relativeY = 0;
-
 
 	for (var i = 0; i < myTanks.length; i++) {
 		if (myTanks[i].hasTarget()) {
@@ -133,7 +145,6 @@ function calculateGoal() {
 			myTanks[i].missionAccomplished();
 		}
 	}
-
 }
 
 // function calculateObstacle(obstacles) {
@@ -141,20 +152,7 @@ function calculateGoal() {
 
 // }
 
-function sendBackCommands() {
-	//add up all calculations
-	var speed, angleVel, orders;
-	for (var i = 0; i < myTanks.length; i++) {
-		speed = myTanks[i].goal.speed * 1;
-		angleVel = myTanks[i].goal.angleVel * 1;
-		orders = {
-			tankNumbers: [myTanks[i].tankNumber], //an array of numbers e.g. [0,1,2,3]
-			speed: speed,                         //speed of tank value of -1 to 1, numbers outside of this range will default to -1 or 1, whichever is closer.
-			angleVel: angleVel                    //turning speed of tank positive turns right, negative turns left
-		}
-		command.emit("move", orders);
-	}
-}
+
 
 
 
