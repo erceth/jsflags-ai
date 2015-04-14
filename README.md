@@ -10,4 +10,4 @@ JSFlags-ai is a dummy AI that connects to a [JSFlags](https://github.com/erceth/
 - open Chrome tab to port specified in JSFlags and watch your AI be amazing.
 
 ## Demo
-Watch this dummy AI fight itself forever here at [http://www.jsflags.ericethington.com](http://www.jsflags.ericethington.com/)
+Here is a demo [http://www.jsflags.ericethington.com](http://www.jsflags.ericethington.com/)
