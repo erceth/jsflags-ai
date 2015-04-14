@@ -1,6 +1,7 @@
 var connect = require('./connect.js');
+var Tank = require('./tank.js');
 var app = connect.connect;
-
+Tank = Tank.Tank;
 
 app(function(data) {
     var serverTanks = data.serverTanks;
@@ -10,28 +11,7 @@ app(function(data) {
     var selectedPlayer = data.selectedPlayer;
     var myTanks = [];
     //Create base tank Object with properties
-    var Tank = function(tankNumber) {
-        this.tankNumber = tankNumber;
-        this.tankColor = selectedPlayer.playerColor;
-        this.position = {
-            x: 0,
-            y: 0
-        };
-        this.angle;
-        this.goal = {
-            speed: 0,
-            angleVel: 0
-        };
-        this.avoidObstacle = {
-            speed: 0,
-            angleVel: 0
-        };
-        this.target = {
-            x: 100,
-            y: 100
-        };
-        this.hasATarget = false;
-    };
+   
     //extend Tank with functions
     Tank.prototype = {
         getTarget: function() {
@@ -56,7 +36,7 @@ app(function(data) {
 
     //assign serverTanks to myTanks array
     for (var i = 0; i < serverTanks.length; i++) {
-        myTanks.push(new Tank(i));
+        myTanks.push(new Tank(i,selectedPlayer));
     }
 
     function startInterval() {
