@@ -18,7 +18,7 @@ Here is a demo [http://www.jsflags.ericethington.com](http://www.jsflags.ericeth
 - It's honestly more information than you need.  Much of it is for the view to display in Chrome.
 - To create a proper AI you must use the info from the gameState.
 - Here's an example gameState object:
-
+```
 {
     "tanks": [
         {
@@ -761,3 +761,4 @@ Here is a demo [http://www.jsflags.ericethington.com](http://www.jsflags.ericeth
         }
     }
 }
+```
