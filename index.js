@@ -112,6 +112,7 @@ function calculateGoal() {
 	var degrees = 0;
 	var relativeX = 0;
 	var relativeY = 0;
+	var angleDifference = 0;
 
 	for (var i = 0; i < myTanks.length; i++) {
 		if (myTanks[i].hasTarget()) {
@@ -127,18 +128,31 @@ function calculateGoal() {
 		relativeY = goal.y - myTanks[i].position.y;
 		angle = round(Math.atan2(-(relativeY), relativeX), 4);
 		degrees = round(angle * (180 / Math.PI), 4);  //convert from radians to degrees
-		degrees = degrees % 360; //(0 to 360)prevent overflow
 		degrees = -(degrees); // tank degrees ascends clockwise. atan2 ascends counter clockwise. this fixes that difference
 
 		//turn in the direction whichever is closer
-		if (degrees > myTanks[i].angle) { // +
-			myTanks[i].goal.angleVel = 1;
-		} else { // -
-			myTanks[i].goal.angleVel = -1;	
-		} 
+		if (degrees < 0) {
+			degrees = (degrees + 360) % 360;
+		}
+
+		angleDifference = myTanks[i].angle - degrees;
+
+		if (angleDifference > 0) {
+			if (angleDifference < 180) {
+				myTanks[i].goal.angleVel = -1;
+			} else {
+				myTanks[i].goal.angleVel = 1;
+			}
+		} else {
+			if (angleDifference > -180) {
+				myTanks[i].goal.angleVel = 1;
+			} else {
+				myTanks[i].goal.angleVel = -1;
+			}
+		}
 
 		//set speed
-		if (distance >= 20) {
+		if (distance >= 10) {
 			myTanks[i].goal.speed = 1;
 		} else {
 			//myTanks[i].goal.speed = 0;
@@ -148,7 +162,6 @@ function calculateGoal() {
 }
 
 // function calculateObstacle(obstacles) {
-
 
 // }
 
