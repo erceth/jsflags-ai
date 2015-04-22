@@ -12,6 +12,9 @@ JSFlags-ai is a dummy AI that connects to a [JSFlags](https://github.com/erceth/
 ## Demo
 Here is a demo [http://www.jsflags.ericethington.com](http://www.jsflags.ericethington.com/)
 
+## Video tutorial
+This video shows how I implemented the attraction potential field and avoid obstacle potential field. [https://www.youtube.com/watch?v=omqTgNCXfbQ](https://www.youtube.com/watch?v=omqTgNCXfbQ)
+
 ## The gameState object
 - 60 times per second jsflags returns a gameState object on "refresh" event
 - The gameState object contains the positions of all the tanks, flags and properties about them.
