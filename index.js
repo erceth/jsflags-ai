@@ -12,6 +12,9 @@ var connected = false;
 var playerSelection;
 if (process.argv[2]) {
 	playerSelection = parseInt(process.argv[2], 10);
+} else {
+	console.error("usage: node index.js <player-number>")
+	process.exit(1)
 }
 
 var enemyBases = [];
