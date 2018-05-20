@@ -1,4 +1,5 @@
 var port = "8003";
+port = parseInt(process.argv[3], 10) || port
 var url = 'http://localhost:' + port;
 var socketio = require('socket.io-client');
 var socket = socketio(url);
@@ -10,10 +11,10 @@ var selectedPlayer;
 var connected = false;
 
 var playerSelection;
-if (process.argv[2]) {
+if (process.argv[2] ||process.argv[2] === 0 ) {
 	playerSelection = parseInt(process.argv[2], 10);
 } else {
-	console.error("usage: node index.js <player-number>")
+	console.error("usage: node index.js <player-number> <port>")
 	process.exit(1)
 }
 
